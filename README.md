@@ -1,12 +1,12 @@
-# See it live!
+# See it live
 
 Coming soon &trade;
 
 ## Goals
 
-1) Structure of code
-2) Continue to practise React/TypeScript
-3) Bonus: Start writing tests
+1. Structure of code
+2. Continue to practise React/TypeScript
+3. Bonus: Start writing tests
 
 ## Other bits
 
