@@ -175,7 +175,7 @@ module.exports = {
                 // -- 	,*
                 // FROM monster_break
                 // INNER JOIN monster_text ON monster_text.id = monster_break.monster_id
-                // INNER JOIN monster_break_text ON monster_break_text.id = monster.id
+                // INNER JOIN monster_break_text ON monster_break_text.id = monster_break.id
                 // INNER JOIN monster ON monster.id = monster_break.monster_id
                 // WHERE monster_break_text.lang_id = "en" AND monster_text.lang_id = "en"
                 queryChain: function (x) {
@@ -193,7 +193,7 @@ module.exports = {
                             "monster_break_text.lang_id AS MonsterBreakText_LangId")
                         .from("monster_break")
                         .innerJoin("monster_text","monster_text.id", "monster_break.monster_id")
-                        .innerJoin("monster_break_text","monster_break_text.id", "monster.id")
+                        .innerJoin("monster_break_text","monster_break_text.id", "monster_break.id")
                         .innerJoin("monster","monster.id", "monster_break.monster_id")
                         .where("monster_break_text.lang_id", "=", "en")
                         .where("monster_text.lang_id", "=", "en")
