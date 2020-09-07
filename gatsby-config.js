@@ -147,5 +147,58 @@ module.exports = {
                 },
             },
         },
+        {
+            // Querying to a SQLite database
+            resolve: `gatsby-source-sql`,
+            options: {
+                typeName: "MhwMonsterPartData",
+                // This is the field under which the data will be accessible in a future version
+                fieldName: "mhwMonsterPartData",
+                dbEngine: {
+                    client: "sqlite3",
+                    connection: {
+                        filename: "./data/mhw.db",
+                    },
+                    useNullAsDefault: true,
+                },
+                // SELECT
+                //     monster_break.id AS MonsterBreak_Id,
+                //     monster_break.monster_id AS MonsterBreak_MonsterId,
+                //     monster_break.flinch AS MonsterBreak_Flinch,
+                //     monster_break.wound AS MonsterBreak_Wound,
+                //     monster_break.sever AS MonsterBreak_Sever,
+                //     monster_break.extract AS MonsterBreak_Extract,
+                //     monster_text.name AS MonsterText_Name,
+                //     monster_break_text.lang_id AS MonsterBreakText_LangId,
+                //     monster_break_text.part_name AS MonsterBreakText_PartName,
+                //     monster_break_text.lang_id AS MonsterBreakText_LangId
+                // -- 	,*
+                // FROM monster_break
+                // INNER JOIN monster_text ON monster_text.id = monster_break.monster_id
+                // INNER JOIN monster_break_text ON monster_break_text.id = monster.id
+                // INNER JOIN monster ON monster.id = monster_break.monster_id
+                // WHERE monster_break_text.lang_id = "en" AND monster_text.lang_id = "en"
+                queryChain: function (x) {
+                    return x
+                        .select(
+                            "monster_break.id AS MonsterBreak_Id",
+                            "monster_break.monster_id AS MonsterBreak_MonsterId",
+                            "monster_break.flinch AS MonsterBreak_Flinch",
+                            "monster_break.wound AS MonsterBreak_Wound",
+                            "monster_break.sever AS MonsterBreak_Sever",
+                            "monster_break.extract AS MonsterBreak_Extract",
+                            "monster_text.name AS MonsterText_Name",
+                            "monster_break_text.lang_id AS MonsterBreakText_LangId",
+                            "monster_break_text.part_name AS MonsterBreakText_PartName",
+                            "monster_break_text.lang_id AS MonsterBreakText_LangId")
+                        .from("monster_break")
+                        .innerJoin("monster_text","monster_text.id", "monster_break.monster_id")
+                        .innerJoin("monster_break_text","monster_break_text.id", "monster.id")
+                        .innerJoin("monster","monster.id", "monster_break.monster_id")
+                        .where("monster_break_text.lang_id", "=", "en")
+                        .where("monster_text.lang_id", "=", "en")
+                },
+            },
+        },
     ],
 };
