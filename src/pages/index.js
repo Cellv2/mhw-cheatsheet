@@ -24,6 +24,8 @@ const IndexPage = () => (
         <Link to="/monsters-page/">Go to "MHW Monsters Page"</Link>
         <br />
         <Link to="/kinsect-page/">Go to "MHW Kinsect Page"</Link>
+        <br />
+        <Link to="/react-table-test-page/">Go to "React Table"</Link>
     </Layout>
 );
 
