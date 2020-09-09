@@ -10,12 +10,12 @@
     "gatsby-plugin-offline": "^3.2.24",
     "gatsby-plugin-react-helmet": "^3.3.10",
     "gatsby-plugin-sharp": "^2.6.28",
+    "gatsby-plugin-typescript": "^2.4.19",
     "gatsby-source-filesystem": "^2.3.25",
     "gatsby-source-sql": "git+https://github.com/mrfunnyshoes/gatsby-source-sql.git",
     "gatsby-transformer-sharp": "^2.5.13",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
-    "react-data-grid": "^7.0.0-canary.22",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
     "react-table": "^7.5.0",
@@ -24,7 +24,6 @@
   "devDependencies": {
     "@types/node": "^14.6.4",
     "@types/react": "^16.9.49",
-    "@types/react-data-grid": "^4.0.5",
     "@types/react-dom": "^16.9.8",
     "@types/react-table": "^7.0.22",
     "prettier": "2.1.0"
@@ -44,9 +43,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Cellv2/mhw-cheatsheet"
+    "url": "git+https://github.com/Cellv2/mhw-cheatsheet.git"
   },
   "bugs": {
     "url": "https://github.com/Cellv2/mhw-cheatsheet/issues"
-  }
+  },
+  "homepage": "https://github.com/Cellv2/mhw-cheatsheet#readme",
+  "main": "gatsby-browser.js",
+  "author": ""
 }
