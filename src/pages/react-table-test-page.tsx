@@ -65,8 +65,7 @@ const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
     ];
     
     const tableColumns = React.useMemo(
-        () => {
-        [
+        () => [
             {
                 Header: "Monster Name",
                 accessor: "MonsterName",
@@ -74,26 +73,21 @@ const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
             {
                 Header: "Monster Size",
                 accessor: "MonsterSize",
-            }
-        ]
-    }, []);
-
-    // To set up the editor integration, add something like REACT_EDITOR=atom to the .env.local file in your project folder and restart the development server. Learn more: https://goo.gl/MMTaZt
+            },
+        ],
+        []
+    );
 
     const tableData = React.useMemo(() => {
-        // for each edge node
-        // create object in the order of the accessors
-        // read the tablecolumn accessors
-
         return data.allMhwMonsterData.edges.map((nodeObj) => {
             let rowObj: { [key: string]: any } = {};
             tcArr.forEach(({ accessor }) => {
                 rowObj[accessor] = nodeObj.node[accessor];
             });
-            console.log(rowObj);
+
             return rowObj;
         });
-    }, [])
+    }, []);
 
 
     const tableConfig: TableOptions<{}> = {
