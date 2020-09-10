@@ -10,31 +10,91 @@ type DataProps = {
     site: {
         buildTime: string;
     };
+    allMhwMonsterData: {
+        edges: {
+            node: {
+                [key: string]: string | number;
+                MonsterId: number;
+                MonsterSize: string;
+                MonsterName: string;
+                MonsterLangId: string;
+                MonsterDescription: string;
+                LocationName: string;
+                LocationLangId: string;
+                MonsterStartArea: string;
+                MonsterMoveArea: string;
+                MonsterRestArea: string;
+            };
+        }[];
+    };
 };
 
 const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
-    const tableData = React.useMemo(
-        () => [
-            { col1: "Hello", col2: "World" },
-            { col1: "react-table", col2: "ftw" },
-            { col1: "whatever", col2: "you want" },
-        ],
-        []
-    );
+    // const tableData = React.useMemo(
+    //     () => [
+    //         { col1: "Hello", col2: "World" },
+    //         { col1: "react-table", col2: "ftw" },
+    //         { col1: "whatever", col2: "you want" },
+    //     ],
+    //     []
+    // );
 
+    // const tableColumns = React.useMemo(
+    //     () => [
+    //         {
+    //             Header: "Column 1",
+    //             accessor: "col1", // accessor is the "key" in the data
+    //         },
+    //         {
+    //             Header: "Column 2",
+    //             accessor: "col2",
+    //         },
+    //     ],
+    //     []
+    // );
+
+    const tcArr = [
+        {
+            Header: "Monster Name",
+            accessor: "MonsterName",
+        },
+        {
+            Header: "Monster Size",
+            accessor: "MonsterSize",
+        },
+    ];
+    
     const tableColumns = React.useMemo(
-        () => [
+        () => {
+        [
             {
-                Header: "Column 1",
-                accessor: "col1", // accessor is the "key" in the data
+                Header: "Monster Name",
+                accessor: "MonsterName",
             },
             {
-                Header: "Column 2",
-                accessor: "col2",
-            },
-        ],
-        []
-    );
+                Header: "Monster Size",
+                accessor: "MonsterSize",
+            }
+        ]
+    }, []);
+
+    // To set up the editor integration, add something like REACT_EDITOR=atom to the .env.local file in your project folder and restart the development server. Learn more: https://goo.gl/MMTaZt
+
+    const tableData = React.useMemo(() => {
+        // for each edge node
+        // create object in the order of the accessors
+        // read the tablecolumn accessors
+
+        return data.allMhwMonsterData.edges.map((nodeObj) => {
+            let rowObj: { [key: string]: any } = {};
+            tcArr.forEach(({ accessor }) => {
+                rowObj[accessor] = nodeObj.node[accessor];
+            });
+            console.log(rowObj);
+            return rowObj;
+        });
+    }, [])
+
 
     const tableConfig: TableOptions<{}> = {
         columns: tableColumns,
@@ -109,6 +169,22 @@ export const query = graphql`
     {
         site {
             buildTime(formatString: "YYYY-MM-DD hh:mm a z")
+        }
+        allMhwMonsterData {
+            edges {
+                node {
+                    MonsterId
+                    MonsterSize
+                    MonsterName
+                    MonsterLangId
+                    MonsterDescription
+                    LocationName
+                    LocationLangId
+                    MonsterStartArea
+                    MonsterMoveArea
+                    MonsterRestArea
+                }
+            }
         }
     }
 `;
