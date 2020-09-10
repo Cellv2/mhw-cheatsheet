@@ -52,18 +52,7 @@ const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
     //     ],
     //     []
     // );
-
-    const tcArr = [
-        {
-            Header: "Monster Name",
-            accessor: "MonsterName",
-        },
-        {
-            Header: "Monster Size",
-            accessor: "MonsterSize",
-        },
-    ];
-    
+  
     const tableColumns = React.useMemo(
         () => [
             {
@@ -81,7 +70,7 @@ const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
     const tableData = React.useMemo(() => {
         return data.allMhwMonsterData.edges.map((nodeObj) => {
             let rowObj: { [key: string]: any } = {};
-            tcArr.forEach(({ accessor }) => {
+            tableColumns.forEach(({ accessor }) => {
                 rowObj[accessor] = nodeObj.node[accessor];
             });
 
