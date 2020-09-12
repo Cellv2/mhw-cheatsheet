@@ -29,30 +29,9 @@ type DataProps = {
     };
 };
 
-const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
-    // const tableData = React.useMemo(
-    //     () => [
-    //         { col1: "Hello", col2: "World" },
-    //         { col1: "react-table", col2: "ftw" },
-    //         { col1: "whatever", col2: "you want" },
-    //     ],
-    //     []
-    // );
-
-    // const tableColumns = React.useMemo(
-    //     () => [
-    //         {
-    //             Header: "Column 1",
-    //             accessor: "col1", // accessor is the "key" in the data
-    //         },
-    //         {
-    //             Header: "Column 2",
-    //             accessor: "col2",
-    //         },
-    //     ],
-    //     []
-    // );
-  
+const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => { 
+    // Header is what will be displayed
+    // accessor needs to be the key one of the GQL nodes that's passed in
     const tableColumns = React.useMemo(
         () => [
             {
@@ -62,6 +41,10 @@ const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
             {
                 Header: "Monster Size",
                 accessor: "MonsterSize",
+            },
+            {
+                Header: "Monster Location",
+                accessor: "LocationName",
             },
         ],
         []
