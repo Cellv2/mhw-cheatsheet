@@ -1,5 +1,5 @@
-import React from "react";
-import { Column, TableOptions, useTable } from "react-table";
+import React, { useState } from "react";
+import { Column, TableOptions, useFilters, useTable } from "react-table";
 
 type Props = {
     tableColumns: Column<{}>[];
@@ -7,11 +7,19 @@ type Props = {
 };
 
 const Table = ({ tableColumns, tableData }: Props) => {
+    const [filterInput, setFilterInput] = useState("");
+
+    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setFilter("MonsterName", value);
+        setFilterInput(value);
+    };
+
     const tableConfig: TableOptions<{}> = {
         columns: tableColumns,
         data: tableData,
     };
-    const tableInstance = useTable(tableConfig);
+    const tableInstance = useTable(tableConfig, useFilters);
 
     const {
         getTableProps,
@@ -19,10 +27,18 @@ const Table = ({ tableColumns, tableData }: Props) => {
         headerGroups,
         rows,
         prepareRow,
+        // TODO: find out why TS doesn't like this
+        //@ts-ignore
+        setFilter,
     } = tableInstance;
 
     return (
         <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+            <input
+                value={filterInput}
+                onChange={handleFilterChange}
+                placeholder={"Search by monster name"}
+            ></input>
             <thead>
                 {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
