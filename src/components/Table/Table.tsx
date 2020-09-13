@@ -7,12 +7,22 @@ type Props = {
 };
 
 const Table = ({ tableColumns, tableData }: Props) => {
-    const [filterInput, setFilterInput] = useState("");
+    // we use an object of accessor (column.id): searchValue pairs
+    // this allows us to have the same filter implementation across multiple different columns, each with different identifiers
+    const [filterInput, setFilterInput] = useState<{ [key: string]: string }>(
+        {}
+    );
 
-    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFilterChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        columnId: string
+    ) => {
         const value = event.target.value;
-        setFilter("MonsterName", value);
-        setFilterInput(value);
+        setFilter(columnId, value);
+        setFilterInput((prev) => ({
+            ...prev,
+            [columnId]: value,
+        }));
     };
 
     const tableConfig: TableOptions<{}> = {
@@ -34,11 +44,6 @@ const Table = ({ tableColumns, tableData }: Props) => {
 
     return (
         <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
-            <input
-                value={filterInput}
-                onChange={handleFilterChange}
-                placeholder={"Search by monster name"}
-            ></input>
             <thead>
                 {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
@@ -53,6 +58,13 @@ const Table = ({ tableColumns, tableData }: Props) => {
                                 }}
                             >
                                 {column.render("Header")}
+                                <input
+                                    value={filterInput[column.id]}
+                                    onChange={(e) =>
+                                        handleFilterChange(e, column.id)
+                                    }
+                                    placeholder={`Search ${column.id}`}
+                                ></input>
                             </th>
                         ))}
                     </tr>
