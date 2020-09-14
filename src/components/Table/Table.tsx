@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Column, TableOptions, useFilters, useTable } from "react-table";
 
-type Cols = {
+// Header is what will be displayed
+// accessor needs to be the key one of the GQL nodes that's passed in
+type TableColumns = {
     Header: string;
     accessor: string | number;
 }[];
@@ -13,31 +15,22 @@ type EdgeData = {
 }[];
 
 type Props = {
-    tableColumns: Column<{}>[];
-    tableData: {}[];
-    testCols: Cols;
-    testData: EdgeData;
+    tableColumns: TableColumns;
+    edgeData: EdgeData;
 };
 
-const Table = ({ tableColumns, tableData, testCols, testData }: Props) => {
+/**
+ * Simple filterable table which takes in a set of columns and data, then maps the data into the relevant columns
+ *
+ * @param {TableColumns} tableColumns Header is the name shown, accessor is the key on the edge node which maps to the column
+ * @param {EdgeData} edgeData The whole edge data from the GQL query (i.e. data.myDataQuery.edges)
+ */
+const Table = ({ tableColumns, edgeData }: Props) => {
     // we use an object of accessor (column.id): searchValue pairs
     // this allows us to have the same filter implementation across multiple different columns, each with different identifiers
     const [filterInput, setFilterInput] = useState<{ [key: string]: string }>(
         {}
     );
-
-    const memoTestCols = React.useMemo(() => testCols, []);
-
-    const mappedData = testData.map((nodeObj) => {
-        let rowObj: { [key: string]: any } = {};
-        memoTestCols.forEach(({ accessor }) => {
-            rowObj[accessor] = nodeObj.node[accessor];
-        });
-
-        return rowObj;
-    });
-
-    const memoData = React.useMemo(() => mappedData, []);
 
     const handleFilterChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -50,6 +43,18 @@ const Table = ({ tableColumns, tableData, testCols, testData }: Props) => {
             [columnId]: value,
         }));
     };
+
+    const memoTestCols = React.useMemo(() => tableColumns, []);
+
+    const mappedData = edgeData.map((nodeObj) => {
+        let rowObj: { [key: string]: any } = {};
+        memoTestCols.forEach(({ accessor }) => {
+            rowObj[accessor] = nodeObj.node[accessor];
+        });
+
+        return rowObj;
+    });
+    const memoData = React.useMemo(() => mappedData, []);
 
     const tableConfig: TableOptions<{}> = {
         columns: memoTestCols as Column<{}>[],

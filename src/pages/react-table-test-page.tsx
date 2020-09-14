@@ -50,21 +50,13 @@ const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
         []
     );
 
-    const tableData = React.useMemo(() => {
-        return data.allMhwMonsterData.edges.map((nodeObj) => {
-            let rowObj: { [key: string]: any } = {};
-            tableColumns.forEach(({ accessor }) => {
-                rowObj[accessor] = nodeObj.node[accessor];
-            });
-
-            return rowObj;
-        });
-    }, []);
-
     return (
         <Layout>
             <SEO title="Using React-Table" />
-            <Table tableColumns={tableColumns} tableData={tableData} testCols={tableColumns} testData={data.allMhwMonsterData.edges}></Table>
+            <Table
+                tableColumns={tableColumns}
+                edgeData={data.allMhwMonsterData.edges}
+            ></Table>
             <Link to="/">Go back to the homepage</Link>
         </Layout>
     );
