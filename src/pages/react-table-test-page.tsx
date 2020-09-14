@@ -32,23 +32,20 @@ type DataProps = {
 const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
     // Header is what will be displayed
     // accessor needs to be the key one of the GQL nodes that's passed in
-    const tableColumns = React.useMemo(
-        () => [
-            {
-                Header: "Monster Name",
-                accessor: "MonsterName",
-            },
-            {
-                Header: "Monster Size",
-                accessor: "MonsterSize",
-            },
-            {
-                Header: "Monster Location",
-                accessor: "LocationName",
-            },
-        ],
-        []
-    );
+    const tableColumns = [
+        {
+            Header: "Monster Name",
+            accessor: "MonsterName",
+        },
+        {
+            Header: "Monster Size",
+            accessor: "MonsterSize",
+        },
+        {
+            Header: "Monster Location",
+            accessor: "LocationName",
+        },
+    ];
 
     return (
         <Layout>

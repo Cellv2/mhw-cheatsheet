@@ -5,7 +5,7 @@ import { Column, TableOptions, useFilters, useTable } from "react-table";
 // accessor needs to be the key one of the GQL nodes that's passed in
 type TableColumns = {
     Header: string;
-    accessor: string | number;
+    accessor: string;
 }[];
 
 type EdgeData = {
@@ -44,21 +44,21 @@ const Table = ({ tableColumns, edgeData }: Props) => {
         }));
     };
 
-    const memoTestCols = React.useMemo(() => tableColumns, []);
+    const memoizedColumns = React.useMemo(() => tableColumns, []);
 
     const mappedData = edgeData.map((nodeObj) => {
         let rowObj: { [key: string]: any } = {};
-        memoTestCols.forEach(({ accessor }) => {
+        memoizedColumns.forEach(({ accessor }) => {
             rowObj[accessor] = nodeObj.node[accessor];
         });
 
         return rowObj;
     });
-    const memoData = React.useMemo(() => mappedData, []);
+    const memoizedData = React.useMemo(() => mappedData, []);
 
     const tableConfig: TableOptions<{}> = {
-        columns: memoTestCols as Column<{}>[],
-        data: memoData,
+        columns: memoizedColumns as Column<{}>[],
+        data: memoizedData,
     };
     const tableInstance = useTable(tableConfig, useFilters);
 
