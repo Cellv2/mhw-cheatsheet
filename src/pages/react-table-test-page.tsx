@@ -64,7 +64,7 @@ const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
     return (
         <Layout>
             <SEO title="Using React-Table" />
-            <Table tableColumns={tableColumns} tableData={tableData}></Table>
+            <Table tableColumns={tableColumns} tableData={tableData} testCols={tableColumns} testData={data.allMhwMonsterData.edges}></Table>
             <Link to="/">Go back to the homepage</Link>
         </Layout>
     );

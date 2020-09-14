@@ -1,17 +1,43 @@
 import React, { useState } from "react";
 import { Column, TableOptions, useFilters, useTable } from "react-table";
 
+type Cols = {
+    Header: string;
+    accessor: string | number;
+}[];
+
+type EdgeData = {
+    node: {
+        [key: string]: string | number;
+    };
+}[];
+
 type Props = {
     tableColumns: Column<{}>[];
     tableData: {}[];
+    testCols: Cols;
+    testData: EdgeData;
 };
 
-const Table = ({ tableColumns, tableData }: Props) => {
+const Table = ({ tableColumns, tableData, testCols, testData }: Props) => {
     // we use an object of accessor (column.id): searchValue pairs
     // this allows us to have the same filter implementation across multiple different columns, each with different identifiers
     const [filterInput, setFilterInput] = useState<{ [key: string]: string }>(
         {}
     );
+
+    const memoTestCols = React.useMemo(() => testCols, []);
+
+    const mappedData = testData.map((nodeObj) => {
+        let rowObj: { [key: string]: any } = {};
+        memoTestCols.forEach(({ accessor }) => {
+            rowObj[accessor] = nodeObj.node[accessor];
+        });
+
+        return rowObj;
+    });
+
+    const memoData = React.useMemo(() => mappedData, []);
 
     const handleFilterChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -26,8 +52,8 @@ const Table = ({ tableColumns, tableData }: Props) => {
     };
 
     const tableConfig: TableOptions<{}> = {
-        columns: tableColumns,
-        data: tableData,
+        columns: memoTestCols as Column<{}>[],
+        data: memoData,
     };
     const tableInstance = useTable(tableConfig, useFilters);
 
