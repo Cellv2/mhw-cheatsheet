@@ -4,7 +4,7 @@ import { PageProps, Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import FilterableTable from "../components/Table/Table";
+import FilterableTable from "../components/Table/FilterableTable";
 
 type DataProps = {
     site: {
