@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Column, TableOptions, useFilters, useTable } from "react-table";
 
+import Table from "react-bootstrap/Table";
+
 // Header is what will be displayed
 // accessor needs to be the key one of the GQL nodes that's passed in
 type TableColumns = {
@@ -25,7 +27,7 @@ type Props = {
  * @param {TableColumns} tableColumns Header is the name shown, accessor is the key on the edge node which maps to the column
  * @param {EdgeData} edgeData The whole edge data from the GQL query (i.e. data.myDataQuery.edges)
  */
-const Table = ({ tableColumns, edgeData }: Props) => {
+const FilterableTable = ({ tableColumns, edgeData }: Props) => {
     // we use an object of accessor (column.id): searchValue pairs
     // this allows us to have the same filter implementation across multiple different columns, each with different identifiers
     const [filterInput, setFilterInput] = useState<{ [key: string]: string }>(
@@ -74,20 +76,12 @@ const Table = ({ tableColumns, edgeData }: Props) => {
     } = tableInstance;
 
     return (
-        <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+        <Table striped bordered hover {...getTableProps()}>
             <thead>
                 {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => (
-                            <th
-                                {...column.getHeaderProps()}
-                                style={{
-                                    borderBottom: "solid 3px red",
-                                    background: "aliceblue",
-                                    color: "black",
-                                    fontWeight: "bold",
-                                }}
-                            >
+                            <th {...column.getHeaderProps()}>
                                 {column.render("Header")}
                                 <input
                                     value={filterInput[column.id]}
@@ -108,14 +102,7 @@ const Table = ({ tableColumns, edgeData }: Props) => {
                         <tr {...row.getRowProps()}>
                             {row.cells.map((cell) => {
                                 return (
-                                    <td
-                                        {...cell.getCellProps()}
-                                        style={{
-                                            padding: "10px",
-                                            border: "solid 1px gray",
-                                            background: "papayawhip",
-                                        }}
-                                    >
+                                    <td {...cell.getCellProps()}>
                                         {cell.render("Cell")}
                                     </td>
                                 );
@@ -124,8 +111,8 @@ const Table = ({ tableColumns, edgeData }: Props) => {
                     );
                 })}
             </tbody>
-        </table>
+        </Table>
     );
 };
 
-export default Table;
+export default FilterableTable;

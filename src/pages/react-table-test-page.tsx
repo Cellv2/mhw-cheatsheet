@@ -4,7 +4,7 @@ import { PageProps, Link, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import Table from "../components/Table/Table";
+import FilterableTable from "../components/Table/Table";
 
 type DataProps = {
     site: {
@@ -50,10 +50,10 @@ const ReactTableTestPage: React.FC<PageProps<DataProps>> = ({ data, path }) => {
     return (
         <Layout>
             <SEO title="Using React-Table" />
-            <Table
+            <FilterableTable
                 tableColumns={tableColumns}
                 edgeData={data.allMhwMonsterData.edges}
-            ></Table>
+            ></FilterableTable>
             <Link to="/">Go back to the homepage</Link>
         </Layout>
     );
