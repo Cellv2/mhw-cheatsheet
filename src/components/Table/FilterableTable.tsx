@@ -12,7 +12,7 @@ type TableColumns = {
 
 type EdgeData = {
     node: {
-        [key: string]: string | number;
+        [key: string]: string | number | null;
     };
 }[];
 
