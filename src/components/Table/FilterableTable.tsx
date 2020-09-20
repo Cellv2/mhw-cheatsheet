@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Column, TableOptions, useFilters, useTable } from "react-table";
 
 import Table from "react-bootstrap/Table";
+import FloatingLabel from "./FloatingLabel";
 
 // Header is what will be displayed
 // accessor needs to be the key one of the GQL nodes that's passed in
@@ -82,14 +83,12 @@ const FilterableTable = ({ tableColumns, edgeData }: Props) => {
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => (
                             <th {...column.getHeaderProps()}>
-                                {column.render("Header")}
-                                <input
+                                <FloatingLabel
+                                    columnId={column.id}
+                                    handleFilterChange={handleFilterChange}
+                                    placeholder={column.Header?.toString()}
                                     value={filterInput[column.id]}
-                                    onChange={(e) =>
-                                        handleFilterChange(e, column.id)
-                                    }
-                                    placeholder={`Search ${column.id}`}
-                                ></input>
+                                />
                             </th>
                         ))}
                     </tr>
