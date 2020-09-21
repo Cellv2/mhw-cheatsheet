@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
     siteMetadata: {
         title: `Monster Hunter: World Cheatsheet`,
@@ -29,6 +31,27 @@ module.exports = {
         },
         // typescript
         'gatsby-plugin-typescript',
+        // SCSS
+        {
+            resolve: 'gatsby-plugin-scss-typescript',
+            options: {
+                cssLoaderOptions: {
+                    importLoaders: 1,
+                    localIdentName: '[name]_[local]___[hash:base64:5]_[emoji:1]',
+                },
+                sassLoaderOptions: {
+                    includePaths: [path.resolve(__dirname, './src/**/*.scss')],
+                },
+                cssMinifyOptions: {
+                    assetNameRegExp: /\.optimize\.css$/g,
+                    canPrint: true,
+                },
+                cssExtractOptions: {
+                    filename: '[name].css',
+                    chunkFilename: '[id].css',
+                },
+            },
+        },
         // this (optional) plugin enables Progressive Web App + Offline functionality
         // To learn more, visit: https://gatsby.dev/offline
         // `gatsby-plugin-offline`,

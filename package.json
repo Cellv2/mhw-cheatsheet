@@ -29,6 +29,8 @@
     "@types/react-bootstrap": "^0.32.23",
     "@types/react-dom": "^16.9.8",
     "@types/react-table": "^7.0.23",
+    "gatsby-plugin-scss-typescript": "^4.0.13",
+    "node-sass": "^4.14.1",
     "prettier": "2.1.0"
   },
   "keywords": [
