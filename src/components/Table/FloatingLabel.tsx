@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./FloatingLabel.css";
+import * as styles from "./FloatingLabel.module.scss";
 
 type Props = {
     columnId: string;
@@ -15,7 +15,7 @@ type Props = {
 const FloatingLabel = (props: Props) => {
     const { value, handleFilterChange, placeholder, columnId } = props;
     return (
-        <div className="field">
+        <div className={styles.field}>
             <input
                 type="text"
                 name={value}
