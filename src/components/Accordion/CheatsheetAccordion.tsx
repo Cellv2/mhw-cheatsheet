@@ -13,40 +13,34 @@ const CheatsheetAccordion = (props: Props) => {
     const [queryResults, setQueryResults] = useState<book[]>(bookData.books);
 
     const updateQueryResults = (newResults: any[]) => {
-        setQueryResults(newResults)
-    }
+        setQueryResults(newResults);
+    };
 
     return (
         <>
-            <AccordionSearch initialDataset={bookData.books} updateQueryResults={updateQueryResults} />
-            {queryResults.map((result) => {
-                return (
-                    <div key={result.isbn}>
-                        <p>ISBN: {result.isbn}</p>
-                        <p>Title: {result.title}</p>
-                        <p>Author: {result.author}</p>
-                    </div>
-                );
-            })}
-
-            <Accordion defaultActiveKey="0">
-                <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0">
-                        Click me!
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                        <Card.Body>Hello! I'm the body</Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-                <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="1">
-                        Click me!
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="1">
-                        <Card.Body>Hello! I'm another body</Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-                <CheatsheetCard />
+            <AccordionSearch
+                initialDataset={bookData.books}
+                updateQueryResults={updateQueryResults}
+            />
+            <Accordion>
+                {queryResults.map((result, index) => {
+                    return (
+                        <Card key={result.isbn}>
+                            <Accordion.Toggle
+                                as={Card.Header}
+                                eventKey={`${index}`}
+                            >
+                                {`${result.title} by ${result.author}`}
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey={`${index}`}>
+                                <Card.Body>
+                                    Hello! The ISBN for this book is{" "}
+                                    {result.isbn}
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    );
+                })}
             </Accordion>
         </>
     );
