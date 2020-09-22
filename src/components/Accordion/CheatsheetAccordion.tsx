@@ -3,6 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 
 import AccordionSearch from "./AccordionSearch";
+import CheatsheetCard from "./CheatsheetCard";
 
 type Props = {};
 
@@ -28,6 +29,7 @@ const CheatsheetAccordion = (props: Props) => {
                         <Card.Body>Hello! I'm another body</Card.Body>
                     </Accordion.Collapse>
                 </Card>
+                <CheatsheetCard />
             </Accordion>
         </>
     );
