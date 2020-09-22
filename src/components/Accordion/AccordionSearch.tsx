@@ -3,14 +3,18 @@ import Fuse from "fuse.js";
 
 import { bookData, book } from "./data";
 
-type Props = {};
+type Props = {
+    initialDataset: any;
+    updateQueryResults: (newResults: any[]) => void;
+};
 
 const AccordionSearch = (props: Props) => {
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [queryResults, setQueryResults] = useState<book[]>(bookData.books);
+    // const [queryResults, setQueryResults] = useState<book[]>(bookData.books);
 
-    const _books = bookData;
-    const fuse = new Fuse(_books.books, { keys: ["title", "author", "isbn"] });
+    const fuse = new Fuse(bookData.books, {
+        keys: ["title", "author", "isbn"],
+    });
 
     const handleInputOnChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -18,19 +22,20 @@ const AccordionSearch = (props: Props) => {
         setSearchQuery(event.target.value);
 
         if (!event.target.value || event.target.value === "") {
-            setQueryResults(_books.books);
+            // setQueryResults(bookData.books);
+            props.updateQueryResults(props.initialDataset);
         } else {
-            const s = fuse.search(event.target.value);
-            const d = s.map((r) => r.item);
-            setQueryResults(d);
+            const search = fuse.search(event.target.value);
+            const data = search.map((item) => item.item);
+            // setQueryResults(data);
+            props.updateQueryResults(data);
         }
     };
 
     return (
         <>
             <input onChange={handleInputOnChange} value={searchQuery} />
-            {queryResults.map((result) => {
-                // console.log("KEKW")
+            {/* {queryResults.map((result) => {
                 return (
                     <div key={result.isbn}>
                         <p>ISBN: {result.isbn}</p>
@@ -38,7 +43,7 @@ const AccordionSearch = (props: Props) => {
                         <p>Author: {result.author}</p>
                     </div>
                 );
-            })}
+            })} */}
         </>
     );
 };
